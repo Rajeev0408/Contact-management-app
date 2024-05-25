@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import Sidebar from './Sidebar';
+import ContactsPage from './ContactsPage';
+import ChartsAndMapsPage from './ChartsAndMapsPage';
 
-function App() {
+// Create a client
+const queryClient = new QueryClient();
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <div className="flex">
+          <Sidebar />
+          <div className="flex-grow">
+            <Routes>
+              <Route path="/contacts" element={<ContactsPage />} />
+              <Route path="/charts-and-maps" element={<ChartsAndMapsPage />} />
+            </Routes>
+          </div>
+        </div>
+      </Router>
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;
